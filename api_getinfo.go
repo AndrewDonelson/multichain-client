@@ -12,12 +12,12 @@ import (
 		"version": "1.0.7",
 		"nodeversion": 10006901,
 		"protocolversion": 10011,
-		"chainname": "nlaakstudioscryptobond",
-		"description": "Nlaak Studios Crypto Bond - Andrew Donelson, CEO - 1849 hrs on 11 DEC 2018",
+		"chainname": "chain1",
+		"description": "some text",
 		"protocol": "bitcoin",
 		"port": 5002,
 		"setupblocks": 50,
-		"nodeaddress": "nlaakstudioscryptobond@192.168.1.134:5002",
+		"nodeaddress": "chain1@192.168.1.134:5002",
 		"burnaddress": "1XXXXXXXXuXXXXXXLjXXXXXXSTXXXXXXYk8dDb",
 		"incomingpaused": false,
 		"miningpaused": false,
@@ -38,7 +38,7 @@ import (
 		"errors": ""
 	},
 	"error": null,
-	"id": "GoWAF-MultiChain-RPC-Client"
+	"id": "MultiChain-RPC-Client"
 }
 */
 type GetInfo struct {

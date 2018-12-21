@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
 	//
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/urlfetch"
@@ -17,7 +18,7 @@ import (
 )
 
 const (
-	CONST_ID = "multichain-client"
+	CONST_ID = "MultiChain-RPC-Client"
 )
 
 type Response map[string]interface{}
@@ -33,6 +34,7 @@ type Client struct {
 	port        int
 	credentials string
 	debug       bool
+	Connected   bool
 }
 
 func NewClient(chain, username, password string, port int) *Client {
@@ -44,7 +46,24 @@ func NewClient(chain, username, password string, port int) *Client {
 		chain:       chain,
 		port:        port,
 		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
+		debug:       false,
+		Connected:   true,
 	}
+}
+
+func NewDebugClient(chain, username, password string, port int) *Client {
+	credentials := username + ":" + password
+
+	return &Client{
+		httpClient:  &http.Client{},
+		chain:       chain,
+		port:        port,
+		credentials: base64.StdEncoding.EncodeToString([]byte(credentials)),
+		debug:       true,
+		Connected:   true,
+	}
+
+	return NewClient(chain, username, password, port)
 }
 
 func (client *Client) ViaNode(ipv4 string, port int) *Client {
@@ -117,6 +136,10 @@ func (client *Client) Post(msg interface{}) (Response, error) {
 	resp, err := client.httpClient.Do(request)
 	if err != nil {
 		return nil, err
+	} else {
+		if resp.StatusCode != 200 {
+			return nil, errors.New(resp.Status)
+		}
 	}
 
 	b, err := ioutil.ReadAll(resp.Body)
