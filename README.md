@@ -1,5 +1,7 @@
 # Golang client library for MultiChain blockchain
 
+### Please DO NOT use any of the current existing struct features as they are NOT ready for use. I will complete and test over next week or so.
+
 This library will allow you to complete a basic set of functions with a MultiChain node.
 
 You should be able to issue, and send assets between addresses.
