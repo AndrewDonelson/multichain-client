@@ -1,4 +1,4 @@
-# Golang client library for MultiChain blockchain
+# Golang JSON-RPC Client library for MultiChain blockchain
 
 ### Please DO NOT use any of the current existing struct features as they are NOT ready for use. I will complete and test over next week or so.
 
