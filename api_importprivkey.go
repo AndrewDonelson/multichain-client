@@ -5,7 +5,7 @@ func (client *Client) ImportPrivKey(privKey, label string, rescan bool) (Respons
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": CONST_ID,
+		"id": ClientID,
 		"method": "importprivkey",
 		"params": []interface{}{
 			[]string{privKey},
