@@ -63,7 +63,7 @@ type GetInfo struct {
 }
 
 // ParseResponse takesa valid response and parses it into the model
-func (m *GetInfo) ParseResponse(r Response) {
+func (m *GetInfo) ParseResponse(r interface{}) {
 	err := mapstructure.Decode(m, &r)
 	if err != nil {
 		logger.LogThis.Error(err)
