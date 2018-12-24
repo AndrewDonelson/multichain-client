@@ -1,7 +1,6 @@
 package multichain
 
 import (
-	"github.com/NlaakStudiosLLC/GoWAF/framework/logger"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -34,9 +33,9 @@ type GetPeerInfo struct {
 
 // ParseResponse takes a valid response and parses it into the model
 func (m *GetPeerInfo) ParseResponse(r Response) {
-	err := mapstructure.Decode(m, &r)
+	err := mapstructure.Decode(r, &m)
 	if err != nil {
-		logger.LogThis.Error(err)
+		panic(err)
 	}
 }
 

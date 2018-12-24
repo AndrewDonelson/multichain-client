@@ -1,7 +1,6 @@
 package multichain
 
 import (
-	"github.com/NlaakStudiosLLC/GoWAF/framework/logger"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -22,9 +21,9 @@ type GetWalletInfo struct {
 
 // ParseResponse takesa valid response and parses it into the model
 func (m *GetWalletInfo) ParseResponse(r Response) {
-	err := mapstructure.Decode(m, &r)
+	err := mapstructure.Decode(r, &m)
 	if err != nil {
-		logger.LogThis.Error(err)
+		panic(err)
 	}
 }
 
