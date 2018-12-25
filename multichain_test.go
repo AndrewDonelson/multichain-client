@@ -32,82 +32,114 @@ func Init() {
 
 func testGetInfo(t *testing.T) {
 
+	fName := "GetInfo"
 	obj, err := client.GetInfo()
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetInfo
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetBlockchainInfo(t *testing.T) {
+
+	fName := "GetBlockchainInfo"
+	obj, err := client.GetBlockchainInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetBlockchainInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetPeerInfo(t *testing.T) {
 
+	fName := "GetPeerInfo"
 	obj, err := client.GetPeerInfo()
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetPeerInfo
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetBlock(t *testing.T) {
 
+	fName := "GetBlock"
 	obj, err := client.GetBlock(BlockHash)
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetBlock
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetTransaction(t *testing.T) {
 
+	fName := "GetTransaction"
 	obj, err := client.GetTransaction(TransactionHash)
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetTransaction
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetAddresses(t *testing.T) {
 
+	fName := "GetAddresses"
 	obj, err := client.GetAddresses(true)
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetAddresses
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetAddressBalances(t *testing.T) {
 
+	fName := "GetAddressBalances"
 	obj, err := client.GetAddressBalances(NodeAddress)
 	if err != nil {
-		t.Error("RPC Request failed: ", err)
+		t.Error(fName, err)
 	} else {
 		var info GetAddressBalances
 		info.ParseResponse(obj)
-		t.Log(t.Name(), ": Passed!")
+		t.Log(fName, ": Passed!")
 	}
 }
 
+func testListAddresses(t *testing.T) {
+	fName := "ListAddresses"
+	obj, err := client.ListAddresses(false)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info ListAddresses
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
 func TestAll(t *testing.T) {
 	Init()
 	testGetInfo(t)            // Passed
+	testGetBlockchainInfo(t)  // Passed
 	testGetPeerInfo(t)        // Passed
 	testGetBlock(t)           // Passed
 	testGetTransaction(t)     // Passed
 	testGetAddresses(t)       // Passed
 	testGetAddressBalances(t) // Passed
+	testListAddresses(t)      // Passed
 }
