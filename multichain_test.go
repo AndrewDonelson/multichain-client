@@ -82,6 +82,19 @@ func testGetMemPoolInfo(t *testing.T) {
 	}
 }
 
+func testGetRawMemPool(t *testing.T) {
+
+	fName := "GetRawMemPool"
+	obj, err := client.GetRawMemPool()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetRawMemPool
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
 func testGetBlock(t *testing.T) {
 
 	fName := "GetBlock"
@@ -151,6 +164,7 @@ func TestAll(t *testing.T) {
 	testGetBlockchainInfo(t)  // Passed
 	testGetPeerInfo(t)        // Passed
 	testGetMemPoolInfo(t)     // Passed
+	testGetRawMemPool(t)      // Passed
 	testGetBlock(t)           // Passed
 	testGetTransaction(t)     // Passed
 	testGetAddresses(t)       // Passed
