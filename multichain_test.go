@@ -184,6 +184,19 @@ func testListAddresses(t *testing.T) {
 		t.Log(fName, ": Passed!")
 	}
 }
+
+func testCreateKeyPair(t *testing.T) {
+
+	fName := "CreateKeyPairs"
+	obj, err := client.CreateKeypair()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		t.Log(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
 func TestAll(t *testing.T) {
 	Init()
 	testGetInfo(t)             // Passed
@@ -198,4 +211,5 @@ func TestAll(t *testing.T) {
 	testGetAddresses(t)        // Passed
 	testGetAddressBalances(t)  // Passed
 	testListAddresses(t)       // Passed
+	testCreateKeyPair(t)       // Passed
 }
