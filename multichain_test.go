@@ -77,10 +77,22 @@ func testGetTransaction(t *testing.T) {
 	}
 }
 
+func testGetAddresses(t *testing.T) {
+
+	obj, err := client.GetAddresses(true)
+	if err != nil {
+		t.Error("RPC Request failed: ", err)
+	} else {
+		var info GetAddresses
+		info.ParseResponse(obj)
+		t.Log(t.Name(), ": Passed!")
+	}
+}
 func TestAll(t *testing.T) {
 	Init()
 	testGetInfo(t)        // Passed
 	testGetPeerInfo(t)    // Passed
 	testGetBlock(t)       // Passed
 	testGetTransaction(t) // Passed
+	testGetAddresses(t)   // Passed
 }
