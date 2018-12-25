@@ -2,7 +2,8 @@ package multichain
 
 import "github.com/mitchellh/mapstructure"
 
-type GetBlock struct {
+// GetTransaction is a struct representing the result from the multichain.GetTransaction() RPC Command
+type GetTransaction struct {
 	Result struct {
 		Hash          string      `json:"hash"`
 		Miner         interface{} `json:"miner"`
@@ -24,19 +25,21 @@ type GetBlock struct {
 }
 
 // ParseResponse takesa valid response and parses it into the model
-func (m *GetBlock) ParseResponse(r Response) {
+func (m *GetTransaction) ParseResponse(r Response) {
 	err := mapstructure.Decode(r, &m)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (client *Client) GetBlock(heightOrHash string) (Response, error) {
+// GetTransaction execute the multichain RPC Command `getrawtransaction` and returns the response
+func (client *Client) GetTransaction(txid string) (Response, error) {
 
 	msg := client.Command(
-		"getblock",
+		"getrawtransaction",
 		[]interface{}{
-			heightOrHash,
+			txid,
+			1,
 		},
 	)
 
