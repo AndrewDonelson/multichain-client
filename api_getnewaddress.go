@@ -4,11 +4,9 @@ import "github.com/mitchellh/mapstructure"
 
 // GetNewAddress is a struct representing the result from the multichain.GetNewAddress() RPC Command
 type GetNewAddress struct {
-	Result struct {
-		Version string `json:"version"`
-	} `json:"result"`
-	Error interface{} `json:"error"`
-	ID    string      `json:"id"`
+	Result string      `json:"result"`
+	Error  interface{} `json:"error"`
+	ID     string      `json:"id"`
 }
 
 // ParseResponse takesa valid response and parses it into the model

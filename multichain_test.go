@@ -147,6 +147,19 @@ func testGetAddresses(t *testing.T) {
 	}
 }
 
+func testGetNewAddress(t *testing.T) {
+
+	fName := "GetNewAddress"
+	obj, err := client.GetNewAddress()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetNewAddress
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
 func testGetAddressBalances(t *testing.T) {
 
 	fName := "GetAddressBalances"
@@ -181,6 +194,7 @@ func TestAll(t *testing.T) {
 	testGetRawMemPool(t)       // Passed
 	testGetBlock(t)            // Passed
 	testGetTransaction(t)      // Passed
+	testGetNewAddress(t)       // Passed
 	testGetAddresses(t)        // Passed
 	testGetAddressBalances(t)  // Passed
 	testListAddresses(t)       // Passed
