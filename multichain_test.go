@@ -9,6 +9,7 @@ const (
 	BlockHash = "0063243875ac046f964a5b27889d926baf9f50e097b457a5bf5e4f66e175d081"
 	// Change this to a known Transacation ID on your chain
 	TransactionHash = "4ca7e5e480f9e66fb6b8ceadca0c177e48bee8a7e8df4c685e5dcc03d82eb15e"
+	NodeAddress     = "1B2snMEHWsAMk9p6AZEXEcWN5cDvmWNc85Hdhw"
 )
 
 var client *Client
@@ -88,11 +89,25 @@ func testGetAddresses(t *testing.T) {
 		t.Log(t.Name(), ": Passed!")
 	}
 }
+
+func testGetAddressBalances(t *testing.T) {
+
+	obj, err := client.GetAddressBalances(NodeAddress)
+	if err != nil {
+		t.Error("RPC Request failed: ", err)
+	} else {
+		var info GetAddressBalances
+		info.ParseResponse(obj)
+		t.Log(t.Name(), ": Passed!")
+	}
+}
+
 func TestAll(t *testing.T) {
 	Init()
-	testGetInfo(t)        // Passed
-	testGetPeerInfo(t)    // Passed
-	testGetBlock(t)       // Passed
-	testGetTransaction(t) // Passed
-	testGetAddresses(t)   // Passed
+	testGetInfo(t)            // Passed
+	testGetPeerInfo(t)        // Passed
+	testGetBlock(t)           // Passed
+	testGetTransaction(t)     // Passed
+	testGetAddresses(t)       // Passed
+	testGetAddressBalances(t) // Passed
 }
