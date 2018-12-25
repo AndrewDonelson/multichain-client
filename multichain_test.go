@@ -175,7 +175,7 @@ func TestAll(t *testing.T) {
 	Init()
 	testGetInfo(t)             // Passed
 	testGetBlockchainInfo(t)   // Passed
-	testGetBlockchainParams(t) // Passed
+	testGetBlockchainParams(t) // Failed - Struct not populated
 	testGetPeerInfo(t)         // Passed
 	testGetMemPoolInfo(t)      // Passed
 	testGetRawMemPool(t)       // Passed
