@@ -56,6 +56,19 @@ func testGetBlockchainInfo(t *testing.T) {
 	}
 }
 
+func testGetBlockchainParams(t *testing.T) {
+
+	fName := "GetBlockchainParams"
+	obj, err := client.GetBlockchainParams()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetBlockchainParams
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
 func testGetPeerInfo(t *testing.T) {
 
 	fName := "GetPeerInfo"
@@ -64,6 +77,32 @@ func testGetPeerInfo(t *testing.T) {
 		t.Error(fName, err)
 	} else {
 		var info GetPeerInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetMemPoolInfo(t *testing.T) {
+
+	fName := "GetMemPoolInfo"
+	obj, err := client.GetMemPoolInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetMemPoolInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetRawMemPool(t *testing.T) {
+
+	fName := "GetRawMemPool"
+	obj, err := client.GetRawMemPool()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetRawMemPool
 		info.ParseResponse(obj)
 		t.Log(fName, ": Passed!")
 	}
@@ -134,12 +173,15 @@ func testListAddresses(t *testing.T) {
 }
 func TestAll(t *testing.T) {
 	Init()
-	testGetInfo(t)            // Passed
-	testGetBlockchainInfo(t)  // Passed
-	testGetPeerInfo(t)        // Passed
-	testGetBlock(t)           // Passed
-	testGetTransaction(t)     // Passed
-	testGetAddresses(t)       // Passed
-	testGetAddressBalances(t) // Passed
-	testListAddresses(t)      // Passed
+	testGetInfo(t)             // Passed
+	testGetBlockchainInfo(t)   // Passed
+	testGetBlockchainParams(t) // Failed - Struct not populated
+	testGetPeerInfo(t)         // Passed
+	testGetMemPoolInfo(t)      // Passed
+	testGetRawMemPool(t)       // Passed
+	testGetBlock(t)            // Passed
+	testGetTransaction(t)      // Passed
+	testGetAddresses(t)        // Passed
+	testGetAddressBalances(t)  // Passed
+	testListAddresses(t)       // Passed
 }
