@@ -1,0 +1,28 @@
+package multichain
+
+// GetTxOutSetInfo Returns statistics about the unspent transaction output set.
+// Note this call may take some time.
+//
+//Result:
+//{
+//  "height":n,                       (numeric) The current block height (index)
+//  "bestblock": "hex",               (string) the best block hash hex
+//  "transactions": n,                (numeric) The number of transactions
+//  "txouts": n,                      (numeric) The number of output transactions
+//  "bytes_serialized": n,            (numeric) The serialized size
+//  "hash_serialized": "hash",        (string) The serialized hash
+//  "total_amount": x.xxx             (numeric) The total amount
+//}
+//
+//Examples:
+//> multichain-cli nlaakstudioscryptobond gettxoutsetinfo
+//> curl --user myusername --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "gettxoutsetinfo", "params": [] }' -H 'content-type: text/plain;' http://127.0.0.1:5001
+func (client *Client) GetTxOutSetInfo() (Response, error) {
+
+	msg := client.Command(
+		"gettxoutsetinfo",
+		[]interface{}{},
+	)
+
+	return client.Post(msg)
+}

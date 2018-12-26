@@ -1,12 +1,12 @@
-# Golang client library for MultiChain blockchain
+# Golang JSON-RPC Client library for MultiChain blockchain
+
+### Please DO NOT use any of the current existing struct features as they are NOT ready for use. I will complete and test over next week or so.
 
 This library will allow you to complete a basic set of functions with a MultiChain node.
 
 You should be able to issue, and send assets between addresses.
 
-If you wish to contribute to flesh out the remaining API calls, please make pull requests. My email is alex@cpu.host or rafaelgurudesign@gmail.com if you need something urgently.
-
-I actually use a package I forked from this repo for my own http framework, so probably best to just fork this and add more API commands, which I assume most of the users have already done.
+If you wish to contribute to flesh out the remaining API calls, please make pull requests.
 
 ## Testing
 

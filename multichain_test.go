@@ -1,29 +1,215 @@
 package multichain
 
 import (
-	"fmt"
-	"flag"
+	"testing"
+)
+
+const (
+	// Change this to a known BlockHash on your chain
+	BlockHash = "0063243875ac046f964a5b27889d926baf9f50e097b457a5bf5e4f66e175d081"
+	// Change this to a known Transacation ID on your chain
+	TransactionHash = "4ca7e5e480f9e66fb6b8ceadca0c177e48bee8a7e8df4c685e5dcc03d82eb15e"
+	NodeAddress     = "1B2snMEHWsAMk9p6AZEXEcWN5cDvmWNc85Hdhw"
 )
 
 var client *Client
 
-func init() {
+func Init() {
 
-	chain := flag.String("chain", "", "is the name of the chain")
-	host := flag.String("host", "localhost", "is a string for the hostname")
-	port := flag.String("port", "80", "is a string for the host port")
-	username := flag.String("username", "multichainrpc", "is a string for the username")
-	password := flag.String("password", "12345678", "is a string for the password")
+	// Change these properties for your chain
+	client = NewDebugClient(
+		"nlaakstudioscryptobond",
+		"nscb",
+		"2T22j'8@5Z!}K+KGt)']PQf_",
+		8071,
+	).ViaNode(
+		"73.55.167.87",
+		5001,
+	)
+}
 
-	flag.Parse()
+/***************** DONT EDIT BELOW THIS LINE *********************/
 
-	client = NewClient(
-		*chain,
-		*host,
-		*port,
-		*username,
-		*password,
-	) 
+func testGetInfo(t *testing.T) {
 
-	fmt.Println(client.debug())
+	fName := "GetInfo"
+	obj, err := client.GetInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetBlockchainInfo(t *testing.T) {
+
+	fName := "GetBlockchainInfo"
+	obj, err := client.GetBlockchainInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetBlockchainInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetBlockchainParams(t *testing.T) {
+
+	fName := "GetBlockchainParams"
+	obj, err := client.GetBlockchainParams()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetBlockchainParams
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetPeerInfo(t *testing.T) {
+
+	fName := "GetPeerInfo"
+	obj, err := client.GetPeerInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetPeerInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetMemPoolInfo(t *testing.T) {
+
+	fName := "GetMemPoolInfo"
+	obj, err := client.GetMemPoolInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetMemPoolInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetRawMemPool(t *testing.T) {
+
+	fName := "GetRawMemPool"
+	obj, err := client.GetRawMemPool()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetRawMemPool
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetBlock(t *testing.T) {
+
+	fName := "GetBlock"
+	obj, err := client.GetBlock(BlockHash)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetBlock
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetTransaction(t *testing.T) {
+
+	fName := "GetTransaction"
+	obj, err := client.GetTransaction(TransactionHash)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetTransaction
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetAddresses(t *testing.T) {
+
+	fName := "GetAddresses"
+	obj, err := client.GetAddresses(true)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetAddresses
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetNewAddress(t *testing.T) {
+
+	fName := "GetNewAddress"
+	obj, err := client.GetNewAddress()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetNewAddress
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testGetAddressBalances(t *testing.T) {
+
+	fName := "GetAddressBalances"
+	obj, err := client.GetAddressBalances(NodeAddress)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetAddressBalances
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testListAddresses(t *testing.T) {
+	fName := "ListAddresses"
+	obj, err := client.ListAddresses(false)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info ListAddresses
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func testCreateKeyPair(t *testing.T) {
+
+	fName := "CreateKeyPairs"
+	obj, err := client.CreateKeypair()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		t.Log(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
+func TestAll(t *testing.T) {
+	Init()
+	testGetInfo(t)             // Passed
+	testGetBlockchainInfo(t)   // Passed
+	testGetBlockchainParams(t) // Failed - Struct not populated
+	testGetPeerInfo(t)         // Passed
+	testGetMemPoolInfo(t)      // Passed
+	testGetRawMemPool(t)       // Passed
+	testGetBlock(t)            // Passed
+	testGetTransaction(t)      // Passed
+	testGetNewAddress(t)       // Passed
+	testGetAddresses(t)        // Passed
+	testGetAddressBalances(t)  // Passed
+	testListAddresses(t)       // Passed
+	testCreateKeyPair(t)       // Passed
 }

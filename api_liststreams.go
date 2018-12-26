@@ -32,7 +32,7 @@ func (client *Client) ListStreams(streams string, start, count int, verbose bool
 
 	msg := map[string]interface{}{
 		"jsonrpc": "1.0",
-		"id": CONST_ID,
+		"id": ClientID,
 		"method": "liststreams",
 		"params": params,
 	}
