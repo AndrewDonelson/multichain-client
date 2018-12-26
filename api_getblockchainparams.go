@@ -85,7 +85,7 @@ func (m *GetBlockchainParams) ParseResponse(r Response) {
 	// no valid properity values. Can you look into what is goign on and fix?
 	// If its a bug with mapstructure - then we need a fix.
 
-	j, err := json.Marshal(r)
+	j, _ := json.Marshal(r)
 	err := json.Unmarshal(j, &m)
 
 	if err != nil {
