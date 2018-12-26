@@ -32,7 +32,15 @@ func (m *GetTransaction) ParseResponse(r Response) {
 	}
 }
 
-// GetTransaction execute the multichain RPC Command `getrawtransaction` and returns the response
+// GetTransaction If verbose is 1, returns a JSON object describing transaction
+// txid. For a MultiChain blockchain, each transaction output includes assets
+// and permissions fields listing any assets or permission changes encoded within
+// that output. There will also be a data field listing the content of any
+// OP_RETURN outputs in the transaction.
+//
+// Parameters:
+// 	txid
+// 	(verbose=0)
 func (client *Client) GetTransaction(txid string) (Response, error) {
 
 	msg := client.Command(

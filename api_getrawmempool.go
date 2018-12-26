@@ -22,7 +22,8 @@ func (m *GetRawMemPool) ParseResponse(r Response) {
 	}
 }
 
-// GetRawMemPool execute the multichain RPC Command `getinfo` and returns the response
+// GetRawMemPool Returns a list of transaction IDs which are in the node’s
+// memory pool (see getmempoolinfo).
 func (client *Client) GetRawMemPool() (Response, error) {
 
 	msg := client.Command(
