@@ -33,7 +33,9 @@ func (m *GetBlockchainInfo) ParseResponse(r Response) {
 	}
 }
 
-// GetBlockchainInfo execute the multichain RPC Command `getinfo` and returns the response
+// GetBlockchainInfo returns information about the blockchain, including the
+// bestblockhash of the most recent block on the active chain, which can be
+// compared across nodes to check if they are perfectly synchronized.
 func (client *Client) GetBlockchainInfo() (Response, error) {
 
 	msg := client.Command(

@@ -21,6 +21,14 @@ func (m *GetAddressBalances) ParseResponse(r Response) {
 	}
 }
 
+// GetAddressBalances returns a list of all the asset balances for address
+// in this node’s wallet, with at least minconf confirmations. Use includeLocked
+// to include unspent outputs which have been locked, e.g. by a call to
+// preparelockunspent.
+//
+// Paramters:
+//	address (minconf=1)
+//	(includeLocked=false)
 func (client *Client) GetAddressBalances(address string) (Response, error) {
 
 	msg := client.Command(
