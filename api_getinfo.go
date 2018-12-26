@@ -47,7 +47,15 @@ func (m *GetInfo) ParseResponse(r Response) {
 	}
 }
 
-// GetInfo execute the multichain RPC Command `getinfo` and returns the response
+// GetInfo returns general information about this node and blockchain.
+// MultiChain adds some fields to Bitcoin Core’s response, giving the
+// blockchain’s chainname, description, protocol, peer-to-peer port.
+// There are also incomingpaused and miningpaused fields – see the pause
+// command. The burnaddress is an address with no known private key, to
+// which assets can be sent to make them provably unspendable. The nodeaddress
+// can be passed to other nodes for connecting. The setupblocks field gives the
+// length in blocks of the setup phase in which some consensus constraints
+// are not applied.
 func (client *Client) GetInfo() (Response, error) {
 
 	msg := client.Command(

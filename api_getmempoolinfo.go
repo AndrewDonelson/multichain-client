@@ -22,7 +22,11 @@ func (m *GetMemPoolInfo) ParseResponse(r Response) {
 	}
 }
 
-// GetMemPoolInfo execute the multichain RPC Command `getinfo` and returns the response
+// GetMemPoolInfo returns information about the memory pool, which contains
+// transactions that the node has seen and validated, but which have not yet
+// been confirmed on the active chain. If the memory pool is growing continuously,
+// this suggests that transactions are being generated faster than the network
+// is able to process them.
 func (client *Client) GetMemPoolInfo() (Response, error) {
 
 	msg := client.Command(

@@ -17,6 +17,7 @@ func (m *GetNewAddress) ParseResponse(r Response) {
 	}
 }
 
+// GetNewAddress Returns a new address whose private key is added to the wallet.
 func (client *Client) GetNewAddress() (Response, error) {
 
 	msg := client.Command(
