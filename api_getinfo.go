@@ -1,8 +1,6 @@
 package multichain
 
-import (
-	"github.com/mitchellh/mapstructure"
-)
+import "github.com/mitchellh/mapstructure"
 
 // GetInfo is a struct representing the result from the multichain.GetInfo() RPC Command
 type GetInfo struct {
@@ -42,6 +40,8 @@ type GetInfo struct {
 // ParseResponse takesa valid response and parses it into the model
 func (m *GetInfo) ParseResponse(r Response) {
 	err := mapstructure.Decode(r, &m)
+	//j, _ := json.Marshal(r)
+	//err := json.Unmarshal(j, &m)
 	if err != nil {
 		panic(err)
 	}

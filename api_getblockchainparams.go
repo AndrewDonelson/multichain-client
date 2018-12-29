@@ -81,9 +81,6 @@ type GetBlockchainParams struct {
 
 // ParseResponse takesa valid response and parses it into the model
 func (m *GetBlockchainParams) ParseResponse(r Response) {
-	// Viktor - This is not giving an error, the Response is populated, yet returns
-	// no valid properity values. Can you look into what is goign on and fix?
-	// If its a bug with mapstructure - then we need a fix.
 
 	j, _ := json.Marshal(r)
 	err := json.Unmarshal(j, &m)
