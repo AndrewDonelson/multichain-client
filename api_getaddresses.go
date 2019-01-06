@@ -26,6 +26,13 @@ func (m *GetAddresses) ParseResponse(r Response) {
 	}
 }
 
+// GetAddresses returns a list of addresses in this node’s wallet. Set 
+// verbose to true to get more information about each address, formatted 
+// like the output of the validateaddress command. For more control see the 
+// new listaddresses command.
+//
+// Parameters:
+// 	(verbose=false)
 func (client *Client) GetAddresses(verbose bool) (Response, error) {
 
 	msg := client.Command(
