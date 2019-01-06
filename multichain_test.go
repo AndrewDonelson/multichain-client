@@ -240,8 +240,40 @@ func testCreateKeyPair(t *testing.T) {
 	}
 }
 
+func testListPermissions(t *testing.T) {
+
+	fName := "ListPermissions"
+	//obj, err := client.ListPermissions([]string{"receive", "send"}, []string{}, false)
+	obj, err := client.ListPermissions(nil, nil, true)
+	if err != nil {
+		t.Error(fName, " (Global)", err)
+	} else {
+		var info GetPermissionInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+
+	obj2, err2 := client.ListPermissions([]string{"receive", "send"}, nil, true)
+	if err2 != nil {
+		t.Error(fName, " (Type)", err)
+	} else {
+		var info GetPermissionInfo
+		info.ParseResponse(obj2)
+		t.Log(fName, ": Passed!")
+	}
+
+	obj3, err3 := client.ListPermissions(nil, []string{WalletAddress}, true)
+	if err3 != nil {
+		t.Error(fName, " (Type)", err)
+	} else {
+		var info GetPermissionInfo
+		info.ParseResponse(obj3)
+		t.Log(fName, ": Passed!")
+	}
+
+}
 func TestAll(t *testing.T) {
-	Init(false)                //set to true for debug client
+	Init(true)                 //set to true for debug client
 	testGetInfo(t)             // Passed
 	testGetBlockchainInfo(t)   // Passed
 	testGetBlockchainParams(t) // Passed
@@ -256,4 +288,5 @@ func TestAll(t *testing.T) {
 	testGetAddressBalances(t)  // Passed
 	testListAddresses(t)       // Passed
 	testCreateKeyPair(t)       // Passed
+	testListPermissions(t)     // Passed
 }

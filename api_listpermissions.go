@@ -1,6 +1,37 @@
 package multichain
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/mitchellh/mapstructure"
+)
+
+// Permissions represents an actual permission
+type Permissions struct {
+	Address    string        `json:"address"`
+	For        interface{}   `json:"for"`
+	Type       string        `json:"type"`
+	Startblock int           `json:"startblock"`
+	Endblock   int64         `json:"endblock"`
+	Admins     []string      `json:"admins"`
+	Pending    []interface{} `json:"pending"`
+}
+
+// GetPermissionInfo returns permissions either all, address specific or type specific
+type GetPermissionInfo struct {
+	Result []Permissions `json:"result"`
+	Error  interface{}   `json:"error"`
+	ID     string        `json:"id"`
+}
+
+// ParseResponse takes a valid response and parses it into the model
+func (m *GetPermissionInfo) ParseResponse(r Response) {
+	err := mapstructure.Decode(r, &m)
+	//fmt.Println(m)
+	if err != nil {
+		panic(err)
+	}
+}
 
 // ListPermissions returns a list of all permissions which have been explicitly granted to addresses.
 // To list information about specific global permissions, set permissions to one of connect, send, receive, issue, mine, activate, admin, or a list thereof.
