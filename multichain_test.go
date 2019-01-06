@@ -5,32 +5,57 @@ import (
 )
 
 const (
+	ChainName   = "gwfchain"
+	RPCUser     = "rpcadmin"
+	RPCPassword = "2T22j'8@5Z!}K+KGt)']PQf_"
+	RPCHost     = "73.55.167.87"
+	RPCPort     = 5001
+
 	// Change this to a known BlockHash on your chain
-	BlockHash = "0063243875ac046f964a5b27889d926baf9f50e097b457a5bf5e4f66e175d081"
+	//BlockHash = "0060ee31a9cfaa607e853097204cf42935b094d2fdd5d972d449f55e8d669e9e"
 	// Change this to a known Transacation ID on your chain
-	TransactionHash = "4ca7e5e480f9e66fb6b8ceadca0c177e48bee8a7e8df4c685e5dcc03d82eb15e"
-	NodeAddress     = "1B2snMEHWsAMk9p6AZEXEcWN5cDvmWNc85Hdhw"
+	//TransactionHash = "d17f9ee1a4b9e91fc79582cab3e3572378f511c098a4ab7103e04932e53538bd"
+	//NodeAddress     = "1CCcnSQJbde8WVDsbotWBXDXEZSt4GuE1W9fTK"
 )
 
-var client *Client
+var (
+	client        *Client
+	BlockHash     string
+	TXID          string
+	WalletAddress string
+)
 
-func Init() {
+func Init(debug bool) {
 
-	// Change these properties for your chain
-	client = NewDebugClient(
-		"nlaakstudioscryptobond",
-		"nscb",
-		"2T22j'8@5Z!}K+KGt)']PQf_",
-		8071,
-	).ViaNode(
-		"73.55.167.87",
-		5001,
-	)
+	if debug == true {
+		// Change these properties for your chain
+		client = NewDebugClient(
+			ChainName,
+			RPCUser,
+			RPCPassword,
+			8071,
+		).ViaNode(
+			RPCHost,
+			RPCPort,
+		)
+	} else {
+		// Change these properties for your chain
+		client = NewClient(
+			ChainName,
+			RPCUser,
+			RPCPassword,
+			8071,
+		).ViaNode(
+			RPCHost,
+			RPCPort,
+		)
+	}
 }
 
 /***************** DONT EDIT BELOW THIS LINE *********************/
 
 func testGetInfo(t *testing.T) {
+	t.Helper()
 
 	fName := "GetInfo"
 	obj, err := client.GetInfo()
@@ -44,6 +69,7 @@ func testGetInfo(t *testing.T) {
 }
 
 func testGetBlockchainInfo(t *testing.T) {
+	t.Helper()
 
 	fName := "GetBlockchainInfo"
 	obj, err := client.GetBlockchainInfo()
@@ -52,11 +78,13 @@ func testGetBlockchainInfo(t *testing.T) {
 	} else {
 		var info GetBlockchainInfo
 		info.ParseResponse(obj)
+		BlockHash = info.Result.Bestblockhash
 		t.Log(fName, ": Passed!")
 	}
 }
 
 func testGetBlockchainParams(t *testing.T) {
+	t.Helper()
 
 	fName := "GetBlockchainParams"
 	obj, err := client.GetBlockchainParams()
@@ -108,6 +136,19 @@ func testGetRawMemPool(t *testing.T) {
 	}
 }
 
+func testGetWalletInfo(t *testing.T) {
+
+	fName := "GetWalletInfo"
+	obj, err := client.GetWalletInfo()
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info GetWalletInfo
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
+
 func testGetBlock(t *testing.T) {
 
 	fName := "GetBlock"
@@ -117,6 +158,7 @@ func testGetBlock(t *testing.T) {
 	} else {
 		var info GetBlock
 		info.ParseResponse(obj)
+		TXID = info.Result.Tx[0]
 		t.Log(fName, ": Passed!")
 	}
 }
@@ -124,7 +166,7 @@ func testGetBlock(t *testing.T) {
 func testGetTransaction(t *testing.T) {
 
 	fName := "GetTransaction"
-	obj, err := client.GetTransaction(TransactionHash)
+	obj, err := client.GetTransaction(TXID)
 	if err != nil {
 		t.Error(fName, err)
 	} else {
@@ -143,6 +185,7 @@ func testGetAddresses(t *testing.T) {
 	} else {
 		var info GetAddresses
 		info.ParseResponse(obj)
+		WalletAddress = info.Result[0].Address
 		t.Log(fName, ": Passed!")
 	}
 }
@@ -163,7 +206,7 @@ func testGetNewAddress(t *testing.T) {
 func testGetAddressBalances(t *testing.T) {
 
 	fName := "GetAddressBalances"
-	obj, err := client.GetAddressBalances(NodeAddress)
+	obj, err := client.GetAddressBalances(WalletAddress)
 	if err != nil {
 		t.Error(fName, err)
 	} else {
@@ -198,17 +241,18 @@ func testCreateKeyPair(t *testing.T) {
 }
 
 func TestAll(t *testing.T) {
-	Init()
+	Init(false)                //set to true for debug client
 	testGetInfo(t)             // Passed
 	testGetBlockchainInfo(t)   // Passed
-	testGetBlockchainParams(t) // Failed - Struct not populated
+	testGetBlockchainParams(t) // Passed
 	testGetPeerInfo(t)         // Passed
 	testGetMemPoolInfo(t)      // Passed
 	testGetRawMemPool(t)       // Passed
-	testGetBlock(t)            // Passed
-	testGetTransaction(t)      // Passed
+	testGetWalletInfo(t)       // Passed
 	testGetNewAddress(t)       // Passed
 	testGetAddresses(t)        // Passed
+	testGetBlock(t)            // Passed
+	testGetTransaction(t)      // Passed
 	testGetAddressBalances(t)  // Passed
 	testListAddresses(t)       // Passed
 	testCreateKeyPair(t)       // Passed

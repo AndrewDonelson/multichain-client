@@ -2,25 +2,29 @@ package multichain
 
 import "github.com/mitchellh/mapstructure"
 
+// Block represent a block on the blockchain
+type Block struct {
+	Hash          string      `json:"hash"`
+	Miner         interface{} `json:"miner"`
+	Confirmations int         `json:"confirmations"`
+	Size          int         `json:"size"`
+	Height        int         `json:"height"`
+	Version       int         `json:"version"`
+	Merkleroot    string      `json:"merkleroot"`
+	Tx            []string    `json:"tx"`
+	Time          int         `json:"time"`
+	Nonce         int         `json:"nonce"`
+	Bits          string      `json:"bits"`
+	Difficulty    float64     `json:"difficulty"`
+	Chainwork     string      `json:"chainwork"`
+	Nextblockhash string      `json:"nextblockhash"`
+}
+
+//GetBlock is a structure that represents the full json repsonse including ID and error
 type GetBlock struct {
-	Result struct {
-		Hash          string      `json:"hash"`
-		Miner         interface{} `json:"miner"`
-		Confirmations int         `json:"confirmations"`
-		Size          int         `json:"size"`
-		Height        int         `json:"height"`
-		Version       int         `json:"version"`
-		Merkleroot    string      `json:"merkleroot"`
-		Tx            []string    `json:"tx"`
-		Time          int         `json:"time"`
-		Nonce         int         `json:"nonce"`
-		Bits          string      `json:"bits"`
-		Difficulty    float64     `json:"difficulty"`
-		Chainwork     string      `json:"chainwork"`
-		Nextblockhash string      `json:"nextblockhash"`
-	} `json:"result"`
-	Error interface{} `json:"error"`
-	ID    string      `json:"id"`
+	Result Block       `json:"result"`
+	Error  interface{} `json:"error"`
+	ID     string      `json:"id"`
 }
 
 // ParseResponse takesa valid response and parses it into the model

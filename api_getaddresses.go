@@ -2,6 +2,7 @@ package multichain
 
 import "github.com/mitchellh/mapstructure"
 
+// Address represents a wallet address
 type Address struct {
 	Address      string `json:"address"`
 	Ismine       bool   `json:"ismine"`
