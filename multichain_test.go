@@ -1,6 +1,7 @@
 package multichain
 
 import (
+	"math/rand"
 	"testing"
 )
 
@@ -11,11 +12,10 @@ const (
 	RPCHost     = "73.55.167.87"
 	RPCPort     = 5001
 
-	// Change this to a known BlockHash on your chain
-	//BlockHash = "0060ee31a9cfaa607e853097204cf42935b094d2fdd5d972d449f55e8d669e9e"
-	// Change this to a known Transacation ID on your chain
-	//TransactionHash = "d17f9ee1a4b9e91fc79582cab3e3572378f511c098a4ab7103e04932e53538bd"
-	//NodeAddress     = "1CCcnSQJbde8WVDsbotWBXDXEZSt4GuE1W9fTK"
+	letterBytes   = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	letterIdxBits = 6                    // 6 bits to represent a letter index
+	letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
 )
 
 var (
@@ -23,6 +23,7 @@ var (
 	BlockHash     string
 	TXID          string
 	WalletAddress string
+	StreamName    string
 )
 
 func Init(debug bool) {
@@ -53,6 +54,26 @@ func Init(debug bool) {
 }
 
 /***************** DONT EDIT BELOW THIS LINE *********************/
+
+//RandString - generate random string using masking with source
+func RandString(n int) string {
+	b := make([]byte, n)
+	l := len(letterBytes)
+	// A rand.Int63() generates 63 random bits, enough for letterIdxMax characters!
+	for i, cache, remain := n-1, rand.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = rand.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < l {
+			b[i] = letterBytes[idx]
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+
+	return string(b)
+}
 
 func testGetInfo(t *testing.T) {
 	t.Helper()
@@ -272,6 +293,19 @@ func testListPermissions(t *testing.T) {
 	}
 
 }
+
+func testCreateStream(t *testing.T) {
+	fName := "CreateStream"
+	StreamName := RandString(32)
+	obj, err := client.CreateStream(StreamName, false)
+	if err != nil {
+		t.Error(fName, err)
+	} else {
+		var info ListAddresses
+		info.ParseResponse(obj)
+		t.Log(fName, ": Passed!")
+	}
+}
 func TestAll(t *testing.T) {
 	Init(true)                 //set to true for debug client
 	testGetInfo(t)             // Passed
@@ -289,4 +323,7 @@ func TestAll(t *testing.T) {
 	testListAddresses(t)       // Passed
 	testCreateKeyPair(t)       // Passed
 	testListPermissions(t)     // Passed
+
+	testCreateStream(t) // Passed
+
 }
