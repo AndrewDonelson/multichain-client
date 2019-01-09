@@ -297,12 +297,12 @@ func testListPermissions(t *testing.T) {
 func testCreateStream(t *testing.T) {
 	fName := "CreateStream"
 	StreamName := RandString(32)
-	obj, err := client.CreateStream(StreamName, false)
+	_, err := client.CreateStream(StreamName, false)
 	if err != nil {
 		t.Error(fName, err)
 	} else {
-		var info ListAddresses
-		info.ParseResponse(obj)
+		//var info ListAddresses
+		//info.ParseResponse(obj)
 		t.Log(fName, ": Passed!")
 	}
 }
@@ -318,11 +318,13 @@ func TestAll(t *testing.T) {
 	testGetNewAddress(t)       // Passed
 	testGetAddresses(t)        // Passed
 	testGetBlock(t)            // Passed
-	testGetTransaction(t)      // Passed
-	testGetAddressBalances(t)  // Passed
-	testListAddresses(t)       // Passed
-	testCreateKeyPair(t)       // Passed
-	testListPermissions(t)     // Passed
+
+	testGetTransaction(t) // Passed
+
+	testGetAddressBalances(t) // Passed
+	testListAddresses(t)      // Passed
+	testCreateKeyPair(t)      // Passed
+	testListPermissions(t)    // Passed
 
 	testCreateStream(t) // Passed
 
