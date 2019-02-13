@@ -1,6 +1,6 @@
 package main
 
-import "github.com/AndrewDonelson/multichain-client/example/blockchain"
+import "github.com/AndrewDonelson/multichain-client/blockchain"
 
 func main() {
 	blockchain.NewClient(
