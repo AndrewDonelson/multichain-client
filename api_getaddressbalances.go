@@ -2,7 +2,7 @@ package multichain
 
 import "github.com/mitchellh/mapstructure"
 
-// GetInfo is a struct representing the result from the multichain.GetInfo() RPC Command
+// GetAddressBalances is a struct representing the result from the getaddressbalances RPC Command
 type GetAddressBalances struct {
 	Result []struct {
 		Assetref string  `json:"assetref"`
