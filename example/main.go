@@ -6,7 +6,7 @@ func main() {
 	blockchain.NewClient(
 		"GlobalWealthAndFreedom",
 		"73.55.167.87",
-		6001,
+		5001,
 		"gwfrpc",
 		"rpcuserpassword",
 		true,

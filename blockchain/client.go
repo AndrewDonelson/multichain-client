@@ -57,7 +57,7 @@ func NewClient(name string, host string, port int, user string, password string,
 		m.Info = GetNewInfo(m, m.Verbose)
 		m.apptag = name
 	} else {
-		logger.LogThis.Error("Connection to blockchain failed - Blockchain JSON-RPC not available")
+		logger.LogThis.Errors("Connection to blockchain failed - Blockchain JSON-RPC not available")
 		m = nil
 	}
 
@@ -66,6 +66,11 @@ func NewClient(name string, host string, port int, user string, password string,
 
 // Returns the number of Clients since app started
 func (m *Client) UpdateNodeInfo() {
+	if m.Info.failed == true {
+		logger.LogThis.Warn("Blockchain is not available")
+		return
+	}
+
 	m.beats++
 	logger.LogThis.Info("Blockchain ", m.apptag, " Update #", m.beats)
 	m.Info = GetNewInfo(m, m.Verbose)
@@ -73,6 +78,10 @@ func (m *Client) UpdateNodeInfo() {
 
 // Run the process.
 func (m *Client) Run() {
+	if m.Info.failed == true {
+		return
+	}
+
 	logger.LogThis.Info("Blockchain ", m.apptag, " Sync started.")
 	// Dispatch a process into the background.
 	go func() {
