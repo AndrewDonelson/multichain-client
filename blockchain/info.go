@@ -2,7 +2,7 @@ package blockchain
 
 import (
 	"github.com/AndrewDonelson/multichain-client"
-	"github.com/NlaakStudiosLLC/GoWAF/framework/logger"
+	"github.com/NlaakStudiosLLC/GoWAF-Framework/logger"
 )
 
 // Info holds various information about the connected blockchain node
@@ -63,7 +63,7 @@ func (i *Info) GetParams(m *Client) {
 	if err1 != nil {
 		i.failed = true
 		if i.verbose {
-			logger.LogThis.Errors("RPC Request failed: ", err1)
+			logger.LogThis.Error("RPC Request failed: ", err1)
 		}
 	} else {
 		info.ParseResponse(obj)
@@ -85,7 +85,7 @@ func (i *Info) GetChain(m *Client) {
 	if err1 != nil {
 		i.failed = true
 		if i.verbose {
-			logger.LogThis.Errors("RPC Request failed: ", err1)
+			logger.LogThis.Error("RPC Request failed: ", err1)
 		}
 	} else {
 		info.ParseResponse(obj)
@@ -105,7 +105,7 @@ func (i *Info) GetWallet(m *Client) {
 	if err1 != nil {
 		i.failed = true
 		if i.verbose {
-			logger.LogThis.Errors("RPC Request failed: ", err1)
+			logger.LogThis.Error("RPC Request failed: ", err1)
 		}
 	} else {
 		info.ParseResponse(obj)
@@ -125,7 +125,7 @@ func (i *Info) GetMemPool(m *Client) {
 	if err1 != nil {
 		i.failed = true
 		if i.verbose {
-			logger.LogThis.Errors("RPC Request failed: ", err1)
+			logger.LogThis.Error("RPC Request failed: ", err1)
 		}
 	} else {
 		info.ParseResponse(obj)
@@ -143,7 +143,7 @@ func (i *Info) GetPeers(m *Client) {
 	if err1 != nil {
 		i.failed = true
 		if i.verbose {
-			logger.LogThis.Errors("RPC Request failed: ", err1)
+			logger.LogThis.Error("RPC Request failed: ", err1)
 		}
 	} else {
 		//fmt.Println("obj = ", obj)
