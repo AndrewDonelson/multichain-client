@@ -5,7 +5,7 @@ import (
 
 	"github.com/AndrewDonelson/multichain-client"
 
-	"github.com/NlaakStudiosLLC/GoWAF/framework/logger"
+	"github.com/NlaakStudiosLLC/GoWAF-Framework/logger"
 )
 
 // BlockchainClient provides global access to the Applications MultiChain
@@ -57,7 +57,7 @@ func NewClient(name string, host string, port int, user string, password string,
 		m.Info = GetNewInfo(m, m.Verbose)
 		m.apptag = name
 	} else {
-		logger.LogThis.Errors("Connection to blockchain failed - Blockchain JSON-RPC not available")
+		logger.LogThis.Error("Connection to blockchain failed - Blockchain JSON-RPC not available")
 		m = nil
 	}
 
