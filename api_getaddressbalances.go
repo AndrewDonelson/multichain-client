@@ -2,7 +2,7 @@ package multichain
 
 import "github.com/mitchellh/mapstructure"
 
-// GetInfo is a struct representing the result from the multichain.GetInfo() RPC Command
+// GetAddressBalances is a struct representing the result from the getaddressbalances RPC Command
 type GetAddressBalances struct {
 	Result []struct {
 		Assetref string  `json:"assetref"`
@@ -21,6 +21,14 @@ func (m *GetAddressBalances) ParseResponse(r Response) {
 	}
 }
 
+// GetAddressBalances returns a list of all the asset balances for address
+// in this node’s wallet, with at least minconf confirmations. Use includeLocked
+// to include unspent outputs which have been locked, e.g. by a call to
+// preparelockunspent.
+//
+// Paramters:
+//	address (minconf=1)
+//	(includeLocked=false)
 func (client *Client) GetAddressBalances(address string) (Response, error) {
 
 	msg := client.Command(
